@@ -12,8 +12,8 @@ const _layout = () => {
     return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
   }
   return (
-<Tabs>
-<Tabs.Screen name='index'     options={{
+<Tabs >
+<Tabs.Screen name='index'    options={{
           title: "Overview",
           headerTitleAlign: "center",
           headerTitleStyle:{ fontSize: 16 } ,
@@ -27,7 +27,7 @@ const _layout = () => {
           headerTitleStyle:{ fontSize: 16 },
       tabBarActiveTintColor: "#86efac",
       tabBarInactiveTintColor: "#94a3b8",
-          tabBarIcon: ({ color }) => <TabBarIcon name="paper-plane" color={color}/>,
+          tabBarIcon: ({ color}) => <TabBarIcon name="paper-plane" color={color}/>,
         }} />
           <Tabs.Screen name='recipients'     options={{
           title: "Recepients",
@@ -45,6 +45,14 @@ const _layout = () => {
       tabBarActiveTintColor: "#86efac",
       tabBarInactiveTintColor: "#94a3b8",
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color}/>,
+        }} />
+          <Tabs.Screen name='help'     options={{
+          title: "Help",
+          headerTitleAlign: "center",
+          headerTitleStyle:{ fontSize: 16 },
+      tabBarActiveTintColor: "#86efac",
+      tabBarInactiveTintColor: "#94a3b8",
+          tabBarIcon: ({ color }) => <TabBarIcon name="question" color={color}/>,
         }} />
 
 <StatusBar/>
