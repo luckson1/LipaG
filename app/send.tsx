@@ -5,7 +5,7 @@ import { Stack } from 'expo-router'
 const send = () => {
   return (
     <View>
-       
+          <Stack.Screen/> 
       <Text>send</Text>
     </View>
   )
