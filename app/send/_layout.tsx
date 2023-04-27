@@ -2,13 +2,10 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { Stack } from 'expo-router'
 
-const send = () => {
+const _layout = () => {
   return (
-    <View>
-          <Stack.Screen/> 
-      <Text>send</Text>
-    </View>
+   <Stack />
   )
 }
 
-export default send
+export default _layout
