@@ -62,17 +62,7 @@ const _layout = () => {
       tabBarButton: (props) => <TouchableOpacity {...props} />,
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color}/>,
         }} />
-          <Tabs.Screen name='help'     options={{
-          title: "Help",
-          headerTitleAlign: "center",
-          headerTitleStyle:{ fontSize: 16 },
-          tabBarStyle: {backgroundColor: "#f8fafc"},
-      tabBarActiveTintColor: "#86efac",
-      tabBarInactiveTintColor: "#94a3b8",
-      tabBarLabelStyle: {fontSize: 12},
-      tabBarButton: (props) => <TouchableOpacity {...props} />,
-          tabBarIcon: ({ color }) => <TabBarIcon name="question" color={color}/>,
-        }} />
+        
 
 
 </Tabs>
