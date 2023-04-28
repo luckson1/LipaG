@@ -4,6 +4,8 @@ import { Tabs } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { TouchableOpacity } from 'react-native';
+import { NativeBaseProvider } from "native-base";
+
 const _layout = () => {
   function TabBarIcon(props: {
     name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -12,6 +14,7 @@ const _layout = () => {
     return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
   }
   return (
+    <NativeBaseProvider>
 <Tabs >
 <Tabs.Screen name='index'    options={{
           title: "Overview",
@@ -73,6 +76,7 @@ const _layout = () => {
 
 
 </Tabs>
+</NativeBaseProvider>
   )
 }
 
