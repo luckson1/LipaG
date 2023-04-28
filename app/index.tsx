@@ -1,6 +1,6 @@
 import { View, Text, SafeAreaView, TouchableOpacity, FlatList, } from "react-native";
 import React from "react";
-import { Stack, useRouter } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import { Avatar, Icon } from '@rneui/themed';
 import { TouchableHighlight } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -43,7 +43,7 @@ const Index = () => {
     ]
   return (
     <SafeAreaView className="flex-1 ">
-            <Stack.Screen options={{headerShown:false}} /> 
+            <Tabs.Screen options={{headerShown:false}} /> 
         <StatusBar backgroundColor= "#4ade80"/>
    
       <View className="px-5 h-1/2 bg-green-400 pt-16 pb-7">
@@ -109,7 +109,7 @@ const Index = () => {
     </View>
       </View>
   
-      <View className=" h-1/2 bg-slate-50 flex justify-center px-5 w-full">
+      <View className=" h-1/2 bg-white flex justify-center px-5 w-full">
         <View className="flex flex-row justify-between w-full">
             <Text className="text-xl font-semibold"> History</Text>
             <TouchableOpacity className="flex flex-row" onPress={()=>router.push("/transaction")}>
@@ -130,7 +130,7 @@ const Index = () => {
             <View className="flex flex-row justify-between  my-3 ">
                 <View className="w-8/12 flex flex-row gap-3">
                     <View className="w-1/4">
-  {item.type==="remit"?                   <Avatar
+  {item.type==="send"?                   <Avatar
     size={48}
     rounded
     icon={{ name: "user", type: "font-awesome" }}
@@ -145,14 +145,14 @@ const Index = () => {
                     </View>
                  
 <View className="flex">
-    <Text className="text-lg">{item.name}</Text>
-    <Text className="text-sm font-thin">{item.date}</Text>
+    <Text className="font-medium">{item.name}</Text>
+    <Text className="text-xs font-thin">{item.date}</Text>
 
 </View>
                 </View>
                 <View className="w-1/5 flex"> 
                     <Text >{item.currency}</Text> 
-                    <Text className={`${item.type==="send"? "text-red-400 font-bold": "text-green-600 font-bold"}`}>{item.amount}</Text>  
+                    <Text className={`${item.type==="send"? "text-red-400 font-bold": "text-green-600 font-bold"}`}>{item.amount.toLocaleString()}</Text>  
                 </View>
 
             </View>

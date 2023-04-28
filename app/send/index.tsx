@@ -1,6 +1,6 @@
 import { View, SafeAreaView, Text,  TouchableOpacity, TextInput } from 'react-native'
 import React from 'react'
-import { Stack } from 'expo-router'
+import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { CheckBox } from '@rneui/themed';
 import { useForm, Controller } from 'react-hook-form';
@@ -11,19 +11,17 @@ import { Button } from '@rneui/base';
 
 
 const Form = ({currency}: {currency:number})=> {
-  
-    const convertionValidator=z.object({local:z.number(), foreign: z.number()})
+  const regexPattern = /^[1-9][0-9]*$/;
+    const convertionValidator=z.object({local:z.string().regex(regexPattern, {message: "Enter a Valid amount"}), foreign: z.string().regex(regexPattern, {message: "Enter a Valid amount"})})
     type Values= z.infer<typeof convertionValidator>
-    const { register, setValue, handleSubmit, control, reset } = useForm<Values>({
+    const { register, setValue, handleSubmit, control, reset, formState } = useForm<Values>({
         resolver: zodResolver(convertionValidator),
-        defaultValues: {
-            foreign: 0,
-            local:0
-        }
+    
         
     });
+    const router=useRouter()
     const onSubmit = (data:Values )=> {
-      console.log(data);
+      router.push(`recipients?local=${data.local}&foreign=${data.foreign}`)
     };
   
     // const onChange = arg => {
@@ -31,9 +29,11 @@ const Form = ({currency}: {currency:number})=> {
     //     value: arg.nativeEvent.text,
     //   };
     // };
+    const{ errors}=formState
+    console.log(errors)
     return (
         <View className='w-full  my-5  flex flex-col  '>
-      <Text className='text-sm text-slate-700' >Recipient will receive:</Text>
+      <Text className=' text-slate-700 mb-2' >Recipient will receive:</Text>
       <View className=' w-full flex flex-row justify-between items-start '>
     <Controller
         control={control}
@@ -47,8 +47,8 @@ const Form = ({currency}: {currency:number})=> {
               onBlur={onBlur} 
               keyboardType='numeric'
               onChange={onChange}
-              className='py-3 px-4 block w-2/3 border border-gray-200 rounded-md text-sm focus:border-green-500 focus:ring-green-500 mb-10'
-              value={value.toLocaleString()}
+              className='py-3 px-4 block w-2/3 border-gray-300 border-2 rounded-md  focus:border-green-500 focus:ring-green-500 mb-10'
+              value={value}
            
             />
             
@@ -62,7 +62,7 @@ const Form = ({currency}: {currency:number})=> {
   
    </View>
     </View>
-      <Text className='text-sm text-slate-700' >You will send:</Text>
+      <Text className=' text-slate-700 mb-2' >You will send:</Text>
     <View className=' w-full flex flex-row justify-between items-start '>
     <Controller
         control={control}
@@ -75,8 +75,8 @@ const Form = ({currency}: {currency:number})=> {
             keyboardType='numeric'
               onBlur={onBlur} 
               onChange={onChange}
-              className='py-3 px-4 block w-2/3 border border-gray-200 rounded-md text-sm focus:border-green-500 focus:ring-green-500 mb-10'
-              value={value.toLocaleString()}
+              className='py-3 px-4 block w-2/3  border-gray-300 border-2 rounded-md  focus:border-green-500 focus:ring-green-500 mb-10'
+              value={value}
            
             />
             
@@ -93,7 +93,7 @@ const Form = ({currency}: {currency:number})=> {
 
   
 
-      <TouchableOpacity  className='w-full py-3 px-4 shadow  bg-green-400 rounded-lg my-20 flex justify-center items-center'    onPress={handleSubmit(onSubmit)}>
+      <TouchableOpacity  className='w-full py-3 px-4   bg-green-400 rounded-lg my-20 flex justify-center items-center shadow-xl'    onPress={handleSubmit(onSubmit)}>
        <Text className='text-xl text-white font-bold'>Continue</Text>
       </TouchableOpacity>
     </View>
