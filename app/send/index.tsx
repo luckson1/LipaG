@@ -45,7 +45,7 @@ const Form = ({ currency }: { currency: number }) => {
             <TextInput
               onBlur={onBlur}
               keyboardType="numeric"
-              onChange={onChange}
+              onChangeText={onChange}
               className="mb-10 block w-2/3 rounded-md border-2 border-gray-300 px-4  py-3 focus:border-green-500 focus:ring-green-500"
               value={value}
             />
@@ -69,7 +69,7 @@ const Form = ({ currency }: { currency: number }) => {
             <TextInput
               keyboardType="numeric"
               onBlur={onBlur}
-              onChange={onChange}
+              onChangeText={onChange}
               className="mb-10 block w-2/3 rounded-md  border-2 border-gray-300 px-4  py-3 focus:border-green-500 focus:ring-green-500"
               value={value}
             />
