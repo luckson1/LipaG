@@ -6,6 +6,9 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
+  TouchableHighlight,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { z } from "zod";
 import React, { useState } from "react";
@@ -17,9 +20,9 @@ import { Avatar, Button, Icon } from "@rneui/themed";
 import { useForm, Controller } from "react-hook-form";
 
 const Form = ({
-  setModalVisible,
+  setFormVisible,
 }: {
-  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   enum Country {
     Singapore = "Singapore",
@@ -30,9 +33,15 @@ const Form = ({
     company: z
       .string({ errorMap: () => ({ message: "Recipient Bank Required!" }) })
       .nonempty("Recipient's Name Required!"),
-    bank: z.string({errorMap: ()=> ({message: 'Bank Name Required!'})}).nonempty("Recipient's Bank Required!"),
-    swiftCode: z.string({errorMap: ()=> ({message:"Bank's Swift Code Required!"})}).nonempty("Bank's Swift Code Required!"),
-    account: z.string({errorMap: ()=> ({message:"Account Required!"})}).nonempty("Account Required!"),
+    bank: z
+      .string({ errorMap: () => ({ message: "Bank Name Required!" }) })
+      .nonempty("Recipient's Bank Required!"),
+    swiftCode: z
+      .string({ errorMap: () => ({ message: "Bank's Swift Code Required!" }) })
+      .nonempty("Bank's Swift Code Required!"),
+    account: z
+      .string({ errorMap: () => ({ message: "Account Required!" }) })
+      .nonempty("Account Required!"),
     country: z.nativeEnum(Country, {
       errorMap: () => ({
         message: "Select valid Country where the bank is located!",
@@ -40,7 +49,11 @@ const Form = ({
     }),
   });
   type Values = z.infer<typeof convertionValidator>;
-  const { handleSubmit, control, formState: {errors}} = useForm<Values>({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<Values>({
     resolver: zodResolver(convertionValidator),
   });
   const router = useRouter();
@@ -48,23 +61,24 @@ const Form = ({
     console.log(data);
   };
 
-
   return (
+    
     <ScrollView className="flex-1">
-      <SafeAreaView className="flex w-full flex-col items-center justify-between gap-3 p-5">
-        <TouchableOpacity
-          className="flex w-full items-end justify-center"
-          onPress={() => setModalVisible(false)}
+      <SafeAreaView className="items-between flex w-full flex-col justify-between gap-y-5 p-5">
+        <View
+          className="flex  flex-row w-full items-center justify-between"
+      
         >
-          <View className="rounded-full bg-red-600">
+          <Text className="text-xl">Recipient&apos;s Bank Details</Text>
+          <TouchableOpacity className="rounded-full bg-red-600"     onPress={() => setFormVisible(false)}>
             <Icon
               name="close"
               type="simple-line-icons"
-              size={36}
+              size={28}
               color={"white"}
             />
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
 
         <View className=" flex w-full items-start justify-between ">
           <Text className=" mb-2 text-slate-700">Recipient Company Name</Text>
@@ -80,7 +94,7 @@ const Form = ({
               <TextInput
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
-                className="block w-full rounded-md border-2 border-gray-300 px-4 py-3  focus:border-green-500 focus:ring-green-500 "
+                className= {`block w-full rounded-md border  px-4 py-3 ${errors.company? "border-red-500  focus:border-green-500 focus:ring-green-500": " border-gray-300  focus:border-green-500 focus:ring-green-500"}`}
                 value={value}
               />
             )}
@@ -89,7 +103,9 @@ const Form = ({
         </View>
 
         <View className=" flex w-full  items-start justify-between ">
-          <Text className=" mb-2 text-slate-700">Bank Name</Text>
+          <Text className=" mb-2 text-slate-700">
+            Recipient&apos;s Bank Name
+          </Text>
           {errors.bank && (
             <Text className=" mb-2 text-red-500">{errors.bank.message}</Text>
           )}
@@ -99,7 +115,7 @@ const Form = ({
               <TextInput
                 onBlur={onBlur}
                 onChangeText={onChange}
-                className="block w-full rounded-md border-2  border-gray-300 px-4 py-3  focus:border-green-500 focus:ring-green-500 "
+                    className= {`block w-full rounded-md border  px-4 py-3 ${errors.bank? "border-red-500  focus:border-green-500 focus:ring-green-500": " border-gray-300  focus:border-green-500 focus:ring-green-500"}`}
                 value={value}
               />
             )}
@@ -107,7 +123,9 @@ const Form = ({
           />
 
           <View className=" mt-4 flex w-full items-start justify-between">
-            <Text className=" mb-2 text-slate-700">Country</Text>
+            <Text className=" mb-2 text-slate-700">
+              Country where bank is located
+            </Text>
             {errors.country && (
               <Text className=" mb-2 text-red-500">
                 {errors.country.message}
@@ -120,7 +138,7 @@ const Form = ({
                 <Select
                   selectedValue={value}
                   width="100%"
-                  className="block w-full rounded-md border-gray-300  px-4 py-3"
+                  className="block w-full rounded-md border-gray-300  px-4 py-3.5"
                   accessibilityLabel="Choose Country"
                   placeholder="Choose Country"
                   _selectedItem={{
@@ -139,8 +157,9 @@ const Form = ({
             />
           </View>
         </View>
-        <View className=" mt-7 flex  w-full items-start justify-between ">
-          <Text className=" mb-2 text-slate-700">Swift Code</Text>
+        <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className=" flex w-full  items-start justify-between " keyboardVerticalOffset={Platform.OS==="ios"? -64: -32} >
+          <Text className=" mb-2 text-slate-700">Banks&apos;s Swift Code</Text>
           {errors.swiftCode && (
             <Text className=" mb-2 text-red-500">
               {errors.swiftCode.message}
@@ -152,14 +171,15 @@ const Form = ({
               <TextInput
                 onBlur={onBlur}
                 onChangeText={onChange}
-                className="block w-full rounded-md border-2  border-gray-300 px-4 py-3  focus:border-green-500 focus:ring-green-500 "
+                    className= {`block w-full rounded-md border  px-4 py-3 ${errors.swiftCode? "border-red-500  focus:border-green-500 focus:ring-green-500": " border-gray-300  focus:border-green-500 focus:ring-green-500"}`}
                 value={value}
               />
             )}
             name="swiftCode"
           />
-        </View>
-        <View className=" flex w-full  items-start justify-between ">
+        </KeyboardAvoidingView>
+        <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className=" flex w-full  items-start justify-between " keyboardVerticalOffset={Platform.OS==="ios"? -64: -32}>
           <Text className=" mb-2 text-slate-700">Account of Recipient</Text>
           {errors.account && (
             <Text className=" mb-2 text-red-500">{errors.account.message}</Text>
@@ -170,13 +190,13 @@ const Form = ({
               <TextInput
                 onBlur={onBlur}
                 onChangeText={onChange}
-                className="block w-full rounded-md border-2  border-gray-300 px-4 py-3  focus:border-green-500 focus:ring-green-500 "
+                    className= {`block w-full rounded-md border  px-4 py-3 ${errors.account? "border-red-500  focus:border-green-500 focus:ring-green-500": " border-gray-300  focus:border-green-500 focus:ring-green-500"}`}
                 value={value}
               />
             )}
             name="account"
           />
-        </View>
+        </KeyboardAvoidingView>
 
         <View className="w-full">
           <TouchableOpacity
@@ -186,6 +206,145 @@ const Form = ({
             <Text className="text-xl font-bold text-white">Add Recipient</Text>
           </TouchableOpacity>
         </View>
+      </SafeAreaView>
+    </ScrollView>
+  );
+};
+
+const Confirmation = () => {
+  return (
+    <ScrollView className="flex-1">
+      <SafeAreaView className="flex w-full flex-col items-center justify-between  p-5">
+        <View className=" my-5 w-full rounded-3xl bg-white py-3 shadow-lg shadow-green-400/100">
+          <Text className="text-center text-xl">
+            Hoo Lee Sheet Inc&apos;s Details
+          </Text>
+          <View className="flex w-full flex-row justify-between px-5 py-3">
+            <Text className="text-start">Bank</Text>
+            <Text className="text-end">China Bank</Text>
+          </View>
+          <View className="flex w-full flex-row justify-between px-5 py-3">
+            <Text className="text-start">Country</Text>
+            <Text className="text-end">China</Text>
+          </View>
+          <View className="flex w-full flex-row justify-between px-5 py-3">
+            <Text className="text-start">Swift Code</Text>
+            <Text className="text-end">123PS</Text>
+          </View>
+          <View className="flex w-full flex-row justify-between px-5 py-3">
+            <Text className="text-start">Bank Account</Text>
+            <Text className="text-end">1234567891011123</Text>
+          </View>
+        </View>
+        <View className=" my-5 w-full rounded-3xl bg-white py-3 shadow-lg shadow-green-400/100">
+          <Text className="text-center text-xl">Transfer Details Details</Text>
+          <View className="flex w-full flex-row justify-between px-5 py-3">
+            <Text className="text-start">The Recipient Gets:</Text>
+            <Text className="text-end"> USD 10,000</Text>
+          </View>
+          <View className="flex w-full flex-row justify-between px-5 py-3">
+            <Text className="text-start">You Send:</Text>
+            <Text className="text-end">USD 1,357,000</Text>
+          </View>
+          <View className="flex w-full flex-row justify-between px-5 py-3">
+            <Text className="text-start">Exchange Rate:</Text>
+            <Text className="text-end"> 1 USD = 135.7 KES</Text>
+          </View>
+        </View>
+        <View className="my-5 w-full">
+          <TouchableOpacity className="my-2 flex w-full   items-center justify-center rounded-lg bg-green-400 px-4 py-3 shadow-xl">
+            <Text className="text-xl font-bold text-white">Confirm</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </ScrollView>
+  );
+};
+
+const PaymentMethod = ({setPaymentMethodVisible}: {setPaymentMethodVisible: React.Dispatch<React.SetStateAction<boolean>>}) => {
+  return (
+    <ScrollView className="flex-1">
+      <SafeAreaView className="flex w-full flex-col items-center justify-between  p-5">
+      <View
+          className="flex flex-row w-full  justify-between items-center my-5"
+          // onPress={() => sePaymentMethodVisible(false)}
+        >
+         <Text className="text-xl">How do you want to pay?</Text>
+          <TouchableOpacity className="rounded-full bg-slate-300" onPress={() => setPaymentMethodVisible(false)}>
+            <Icon
+              name="close"
+              type="simple-line-icons"
+              size={30}
+              color={"red"}
+            />
+
+          </TouchableOpacity>
+        </View>
+      
+       <TouchableOpacity className=" flex justify-center items-center mt-5 w-full rounded-xl bg-slate-200  py-5 shadow-lg shadow-green-400/100" >
+       <View className=" w-full">
+          <Text className=" text-center text-xl">Mpesa</Text>
+          <View className="flex w-full flex-row items-center justify-between">
+            <View className="w-1/6">
+              <Icon
+                name="mobile"
+                type="font-awesome"
+                size={64}
+                color={"#22c55e"}
+              />
+            </View>
+            <View className="w-2/3">
+              <Text className="w-full text-slate-600 leading-loose tracking-wide ">
+                Send the money to our Pay Bill number. Suitable for amounts less
+                than Ksh. 140,000
+              </Text>
+            </View>
+
+            <View className="w-1/6">
+              <Icon
+                name="arrow-right"
+                type="material"
+                size={64}
+                color={"#4ade80"}
+              />
+            </View>
+          </View>
+        </View>
+       </TouchableOpacity>
+       <TouchableOpacity className=" flex justify-center items-center mt-5 w-full rounded-xl bg-slate-200  py-5 shadow-lg shadow-green-400/100" >
+        <View className="w-full">
+          <Text className=" text-center text-xl">PesaLink</Text>
+          <View className="flex flex-row items-center justify-between w-full">
+<View className="w-1/6">
+<Icon name="mobile" type="font-awesome"  size={64} color={"#0ea5e9"}/>
+</View>
+<View 
+className="w-2/3">
+  <Text className="w-full text-slate-600 leading-loose tracking-wide "> Send the money to us using PesaLink.  Suitable for amounts less than Ksh. 1,000,000</Text>
+</View>
+<View className="w-1/6">
+<Icon name="arrow-right" type="simple-line-icons"  size={64} color={"#4ade80"}/>
+</View>
+</View>
+        </View>
+        </TouchableOpacity>
+        <TouchableOpacity className=" flex justify-center items-center mt-5 w-full rounded-xl bg-slate-200  py-5 shadow-lg shadow-green-400/100" >
+        <View className="w-full">
+          <Text className=" text-center text-xl">Manual Bank Transfer</Text>
+          <View className="flex flex-row items-center justify-between">
+<View className="w-1/6">
+<Icon name="account-balance" type="material"  size={40} color={"#9700b9"}/>
+</View>
+<View 
+className="w-2/3">
+  <Text className="w-full text-slate-600 leading-loose tracking-wide ">Manually send the money to ust using your Bank.  Suitable for amounts more than Ksh. 1,000,000</Text>
+</View>
+<View className="w-1/6">
+<Icon name="arrow-right" type="simple-line-icons"  size={64} color={"#4ade80"}/>
+</View>
+</View>
+        </View>
+        </TouchableOpacity>
       </SafeAreaView>
     </ScrollView>
   );
@@ -211,8 +370,9 @@ const Index = () => {
   const router = useRouter();
   const params = useSearchParams();
   console.log(params);
-  const [modalVisible, setModalVisible] = useState(false);
-
+  const [formVisible, setFormVisible] = useState(false);
+  const [confirmationVisible, setConfirmationVisible] = useState(false);
+  const [paymentMethodVisible, setPaymentMethodVisible] = useState(true);
   return (
     <SafeAreaView className="flex-1 bg-white">
       <Stack.Screen options={{ headerShown: false }} />
@@ -228,9 +388,11 @@ const Index = () => {
             type="solid"
             className="flex flex-row gap-2"
             color={"#4ade80"}
-            onPress={() => setModalVisible(true)}
+            onPress={() => setFormVisible(true)}
           >
+            
             <Icon name="plus" type="font-awesome" color={"white"} />
+            {" "}
             Add
           </Button>
         </View>
@@ -263,7 +425,7 @@ const Index = () => {
                   </View>
                 </View>
                 <View className="flex w-1/5">
-                  <TouchableOpacity className="flex items-baseline justify-center   rounded-full bg-green-400 py-1 shadow-xl shadow-green-400/100">
+                  <TouchableOpacity className="flex items-baseline justify-center   rounded-lg bg-green-400 py-1 shadow-xl shadow-green-400/100">
                     <Text className="mx-auto text-center text-sm text-white">
                       Send
                     </Text>
@@ -274,11 +436,25 @@ const Index = () => {
           />
         </View>
         <Modal
-          visible={modalVisible}
+          visible={formVisible}
           animationType="slide"
-          onRequestClose={() => setModalVisible(false)}
+          onRequestClose={() => setFormVisible(false)}
         >
-          <Form setModalVisible={setModalVisible} />
+          <Form setFormVisible={setFormVisible} />
+        </Modal>
+        <Modal
+          visible={confirmationVisible}
+          animationType="slide"
+          onRequestClose={() => setConfirmationVisible(false)}
+        >
+          <Confirmation />
+        </Modal>
+        <Modal
+          visible={paymentMethodVisible}
+          animationType="slide"
+          onRequestClose={() => setPaymentMethodVisible(false)}
+        >
+          <PaymentMethod setPaymentMethodVisible={setPaymentMethodVisible}/>
         </Modal>
       </View>
     </SafeAreaView>
