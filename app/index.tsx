@@ -10,34 +10,34 @@ const Index = () => {
     const data= [
         {
             id:"1",
-            name: "Jack Gathondu",
-            type: "remit",
-            currency: "KES",
-            amount: 949900,
+            name: "Foo Fashion",
+            status: "completed",
+            currency: "CYN",
+            amount: 9499,
             date: "Sun Apr 23, 2023 17:18"
         },
         {
             id:"2",
             name: "Acorn Ltd",
-            type: "send",
+            status: "canceled",
             currency: "USD",
             amount: 7000,
             date: "Sun Apr 23, 2023 17:18"
         },
         {
             id:"3",
-            name: "Jack Gathondu",
-            type: "remit",
-            amount: 1357000,
-            currency: "KES",
+            name: "Yee Kung Fu Ltd",
+            status: "pending",
+            amount: 13570,
+            currency: "USD",
             date: "Sun Apr 23, 2023 17:18"
         },
         {
             id:"4",
             name: "Ho Lee Sheet Inc",
-            type: "send",
+            status: "sending",
             currency: "USD",
-            amount: 1000000,
+            amount: 10000,
             date: "Sun Apr 23, 2023 17:18"
         }
     ]
@@ -112,7 +112,7 @@ const Index = () => {
       <View className=" h-1/2 bg-white flex justify-center px-5 w-full">
         <View className="flex flex-row justify-between w-full">
             <Text className="text-xl font-semibold"> History</Text>
-            <TouchableOpacity className="flex flex-row" onPress={()=>router.push("/transaction")}>
+            <TouchableOpacity className="flex flex-row" onPress={()=>router.push("/transactions")}>
                 <Text className="text text-sky-400">View All Transactions</Text>
                 <Icon
          style={{padding:8, backgroundColor: "inherit", borderRadius:30, fontWeight:"bold"}}
@@ -130,29 +130,24 @@ const Index = () => {
             <View className="flex flex-row justify-between  my-3 ">
                 <View className="w-8/12 flex flex-row gap-3">
                     <View className="w-1/4">
-  {item.type==="send"?                   <Avatar
-    size={48}
-    rounded
-    icon={{ name: "user", type: "font-awesome" }}
-    containerStyle={{ backgroundColor: "#9700b9" , marginLeft:12}}
-  />:                   <Avatar
+                  <Avatar
   size={48}
   rounded
   icon={{ name: "user", type: "font-awesome" }}
   containerStyle={{ backgroundColor: "#4ade80" , marginLeft:12 }}
-/>}
+/>
 
                     </View>
                  
 <View className="flex">
     <Text className="font-medium">{item.name}</Text>
-    <Text className="text-xs font-thin">{item.date}</Text>
+    <Text className={` ${item.status==="canceled"? "text-red-400 " : item.status==="completed"? "text-green-400" : item.status==="sending" ? "text-amber-600":  "text-yellow-500" }`}>{item.status}</Text>
 
 </View>
                 </View>
                 <View className="w-1/5 flex"> 
                     <Text >{item.currency}</Text> 
-                    <Text className={`${item.type==="send"? "text-red-400 font-bold": "text-green-600 font-bold"}`}>{item.amount.toLocaleString()}</Text>  
+                    <Text className="font-bold">{item.amount.toLocaleString()}</Text>  
                 </View>
 
             </View>

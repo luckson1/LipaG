@@ -62,6 +62,18 @@ const _layout = () => {
       tabBarButton: (props) => <TouchableOpacity {...props} />,
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color}/>,
         }} />
+          
+          <Tabs.Screen name='transactions'     options={{
+          title: "Transactions",
+          headerTitleAlign: "center",
+          headerTitleStyle:{ fontSize: 16 },
+          tabBarStyle: {backgroundColor: "#f8fafc"},
+      tabBarActiveTintColor: "#86efac",
+      tabBarInactiveTintColor: "#94a3b8",
+      tabBarLabelStyle: {fontSize: 12},
+      href:null,
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color}/>,
+        }} />
         
 
 
