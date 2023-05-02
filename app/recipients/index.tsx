@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
-  TouchableHighlight,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
@@ -158,7 +157,7 @@ const Form = ({
           </View>
         </View>
         <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className=" flex w-full  items-start justify-between " keyboardVerticalOffset={Platform.OS==="ios"? -64: -32} >
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className=" flex w-full  items-start justify-between " keyboardVerticalOffset={Platform.OS==="ios"? -200: -100} >
           <Text className=" mb-2 text-slate-700">Banks&apos;s Swift Code</Text>
           {errors.swiftCode && (
             <Text className=" mb-2 text-red-500">
@@ -261,94 +260,7 @@ const Confirmation = () => {
   );
 };
 
-const PaymentMethod = ({setPaymentMethodVisible}: {setPaymentMethodVisible: React.Dispatch<React.SetStateAction<boolean>>}) => {
-  return (
-    <ScrollView className="flex-1">
-      <SafeAreaView className="flex w-full flex-col items-center justify-between  p-5">
-      <View
-          className="flex flex-row w-full  justify-between items-center my-5"
-          // onPress={() => sePaymentMethodVisible(false)}
-        >
-         <Text className="text-xl">How do you want to pay?</Text>
-          <TouchableOpacity className="rounded-full bg-slate-300" onPress={() => setPaymentMethodVisible(false)}>
-            <Icon
-              name="close"
-              type="simple-line-icons"
-              size={30}
-              color={"red"}
-            />
 
-          </TouchableOpacity>
-        </View>
-      
-       <TouchableOpacity className=" flex justify-center items-center mt-5 w-full rounded-xl bg-slate-200  py-5 shadow-lg shadow-green-400/100" >
-       <View className=" w-full">
-          <Text className=" text-center text-xl">Mpesa</Text>
-          <View className="flex w-full flex-row items-center justify-between">
-            <View className="w-1/6">
-              <Icon
-                name="mobile"
-                type="font-awesome"
-                size={64}
-                color={"#22c55e"}
-              />
-            </View>
-            <View className="w-2/3">
-              <Text className="w-full text-slate-600 leading-loose tracking-wide ">
-                Send the money to our Pay Bill number. Suitable for amounts less
-                than Ksh. 140,000
-              </Text>
-            </View>
-
-            <View className="w-1/6">
-              <Icon
-                name="arrow-right"
-                type="material"
-                size={64}
-                color={"#4ade80"}
-              />
-            </View>
-          </View>
-        </View>
-       </TouchableOpacity>
-       <TouchableOpacity className=" flex justify-center items-center mt-5 w-full rounded-xl bg-slate-200  py-5 shadow-lg shadow-green-400/100" >
-        <View className="w-full">
-          <Text className=" text-center text-xl">PesaLink</Text>
-          <View className="flex flex-row items-center justify-between w-full">
-<View className="w-1/6">
-<Icon name="mobile" type="font-awesome"  size={64} color={"#0ea5e9"}/>
-</View>
-<View 
-className="w-2/3">
-  <Text className="w-full text-slate-600 leading-loose tracking-wide "> Send the money to us using PesaLink.  Suitable for amounts less than Ksh. 1,000,000</Text>
-</View>
-<View className="w-1/6">
-<Icon name="arrow-right" type="simple-line-icons"  size={64} color={"#4ade80"}/>
-</View>
-</View>
-        </View>
-        </TouchableOpacity>
-        <TouchableOpacity className=" flex justify-center items-center mt-5 w-full rounded-xl bg-slate-200  py-5 shadow-lg shadow-green-400/100" >
-        <View className="w-full">
-          <Text className=" text-center text-xl">Manual Bank Transfer</Text>
-          <View className="flex flex-row items-center justify-between">
-<View className="w-1/6">
-<Icon name="account-balance" type="material"  size={40} color={"#9700b9"}/>
-</View>
-<View 
-className="w-2/3">
-  <Text className="w-full text-slate-600 leading-loose tracking-wide ">Manually send the money to ust using your Bank.  Suitable for amounts more than Ksh. 1,000,000</Text>
-</View>
-<View className="w-1/6">
-<Icon name="arrow-right" type="simple-line-icons"  size={64} color={"#4ade80"}/>
-</View>
-</View>
-        </View>
-        </TouchableOpacity>
-      </SafeAreaView>
-    </ScrollView>
-  );
-};
 const Index = () => {
   const data = [
     {
@@ -372,7 +284,7 @@ const Index = () => {
   console.log(params);
   const [formVisible, setFormVisible] = useState(false);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
-  const [paymentMethodVisible, setPaymentMethodVisible] = useState(true);
+
   return (
     <SafeAreaView className="flex-1 bg-white">
       <Stack.Screen options={{ headerShown: false }} />
@@ -449,13 +361,7 @@ const Index = () => {
         >
           <Confirmation />
         </Modal>
-        <Modal
-          visible={paymentMethodVisible}
-          animationType="slide"
-          onRequestClose={() => setPaymentMethodVisible(false)}
-        >
-          <PaymentMethod setPaymentMethodVisible={setPaymentMethodVisible}/>
-        </Modal>
+      
       </View>
     </SafeAreaView>
   );
