@@ -4,141 +4,198 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
+  ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { CheckBox } from "@rneui/themed";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CheckIcon, KeyboardAvoidingView, Select } from "native-base";
+import { Platform } from "react-native";
 
-const Form = ({ currency }: { currency: number }) => {
-  const regexPattern = /^[1-9][0-9]*$/;
+const ZeCurrencies = z.enum(["USD", "JPY", "CNY"]);
+export type Currencies = z.infer<typeof ZeCurrencies>;
+
+const Form = () => {
+  const regexPattern = /^\d+(\.\d+)?$/;
   const convertionValidator = z.object({
     local: z.string().regex(regexPattern, { message: "Enter a Valid amount" }),
     foreign: z
       .string()
       .regex(regexPattern, { message: "Enter a Valid amount" }),
+      currency: z.enum(["USD", "JPY", "CNY"])
   });
+
+
   type Values = z.infer<typeof convertionValidator>;
-  const { handleSubmit, control, formState } = useForm<Values>({
+
+  const [activeInput, setActiveInput]=useState<'foreign' | 'local'>()
+  const {
+    handleSubmit,
+    watch,
+    setValue,
+    control,
+    resetField,
+    setFocus,
+    formState: { errors },
+  } = useForm<Values>({
     resolver: zodResolver(convertionValidator),
+    defaultValues:{
+      currency: "USD"
+    }
   });
+
+  const watchForeign = watch('foreign');
+  const watchLocal = watch('local');
+  const currency=watch('currency')
+  const conversion= currency==="USD"? 141 : currency==="CNY" ? 20.6 : currency==="JPY" ? 1.1 : 0
+  function handleForeignChange(value:string) {
+    const localValue = Number.isNaN(parseFloat(value) * conversion)? 0: parseFloat(value) * conversion;
+    setValue('local', localValue.toFixed(2).toString());
+    setActiveInput('foreign');
+  }
+
+  function handleLocalChange(value:string) {
+    const foreignValue =Number.isNaN( parseFloat(value) / conversion) ? 0: parseFloat(value) / conversion;
+    setValue('foreign', foreignValue.toFixed(2).toString());
+    setActiveInput('local');
+  }
+
+  //check if currency changes to update local currency
+  useEffect(()=>{
+    const conversion= currency==="USD"? 141 : currency==="CNY" ? 20.6 : currency==="JPY" ? 1.1 : 0
+      const localValue = Number.isNaN(parseFloat(watchForeign) * conversion)? 0: parseFloat(watchForeign) * conversion;
+      setValue('local', localValue.toFixed(2).toString());
+      setActiveInput('foreign');
+    console.log(currency)
+  },[currency])
   const router = useRouter();
   const onSubmit = (data: Values) => {
     router.push(`recipients?local=${data.local}&foreign=${data.foreign}`);
   };
 
-  const { errors } = formState;
-  console.log(errors);
   return (
-    <View className="my-5  flex  w-full flex-col  ">
-      <Text className=" mb-2 text-slate-700">Recipient will receive:</Text>
-      <View className=" flex w-full flex-row items-start justify-between ">
+    <View className="my-2  flex  w-full flex-col  ">
+            <Text className="text-lg text-slate-700 mb-2">
+            Select the currency you want to send
+          </Text>
+          <View className="mt-2 flex  w-full  items-center justify-between">
+          <Controller
+              control={control}
+              name="currency"
+              render={({ field: { onChange, value } }) => (
+                <Select
+                selectedValue={value}
+                width="100%"
+                className="block w-full  rounded-lg  border-gray-300 px-4 py-3.5 text-base"
+             
+                accessibilityLabel="Choose Currency"
+                placeholder="Choose Currency"
+                _selectedItem={{
+                  bg: "green.400",
+  
+                  endIcon: <CheckIcon size="25" />,
+                }}
+                mt={1}
+                onValueChange={(itemValue) => {onChange(itemValue)}}
+              >
+                <Select.Item label=" 🇺🇸 USD" value={"USD"} />
+                <Select.Item label=" 🇨🇳 CNY" value={"CNY"} />
+                <Select.Item label=" 🇯🇵 JPY" value={"JPY"} />
+              </Select>
+              )}
+            />
+         
+          </View>
+      <Text className=" mb-2 mt-10 text-lg text-slate-700">
+        Recipient will receive:
+      </Text>
+    { errors.foreign && <Text className=" mb-2 text-lg text-red-500">
+      {errors.foreign.message}
+      </Text>}
+      <View className=" mb-10 flex h-fit w-full flex-row  items-start justify-between rounded-md border border-gray-300 focus:border-green-500 focus:ring-green-500">
         <Controller
           control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            
-          }) => (
+          render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               onBlur={onBlur}
               keyboardType="numeric"
-              onChangeText={onChange}
-              className="mb-10 block w-2/3 rounded-md border-2 border-gray-300 px-4  py-3 focus:border-green-500 focus:ring-green-500"
-              value={value}
+              value={activeInput === 'foreign' ? value : watchForeign}
+              onChangeText={(value) => {
+                onChange(value);
+                handleForeignChange(value);
+              }}
+              className=" block w-2/3 rounded-md   px-4  py-3"
+              
             />
           )}
           name="foreign"
         />
-        <View className="flex flex-row  items-center  justify-center rounded-lg bg-white  px-4 py-4 shadow-xl shadow-green-400/100">
+        <View className="flex flex-row  items-center  justify-center rounded-lg bg-white  px-4 py-4">
           <Text className="text-slate-700">
-            {currency === 0 ? "USD  🇺🇸" : "CNY  🇨🇳 "}{" "}
+            {currency === "USD"
+              ? "USD  🇺🇸"
+              : currency === "JPY"
+              ? "JPY 🇯🇵"
+              : "CNY  🇨🇳 "}{" "}
           </Text>
         </View>
       </View>
-      <Text className=" mb-2 text-slate-700">You will send:</Text>
-      <View className=" flex w-full flex-row items-start justify-between ">
+      <Text className=" mb-2 text-lg text-slate-700">You will send:</Text>
+      { errors.local && <Text className=" mb-2 text-lg text-red-500">
+      {errors.local.message}
+      </Text>}
+      <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}  keyboardVerticalOffset={Platform.OS==="ios"? -64: -32} className=" mb-10 flex h-fit w-full flex-row  items-start justify-between rounded-md border border-gray-300 focus:border-green-500 focus:ring-green-500">
         <Controller
           control={control}
-          render={({
-            field: { onChange, onBlur, value },
-           
-          }) => (
+          render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               keyboardType="numeric"
               onBlur={onBlur}
-              onChangeText={onChange}
-              className="mb-10 block w-2/3 rounded-md  border-2 border-gray-300 px-4  py-3 focus:border-green-500 focus:ring-green-500"
-              value={value}
+              value={activeInput === 'local' ? value : watchLocal}
+              onChangeText={(value) => {
+                onChange(value);
+                handleLocalChange(value);
+              }}
+              className=" block w-2/3 rounded-md   px-4  py-3"
+         
             />
           )}
           name="local"
         />
-        <View className="flex flex-row  items-center  justify-center rounded-lg bg-white  px-4 py-4 shadow-xl shadow-green-400/100">
+        <View className="flex flex-row  items-center  justify-center rounded-lg bg-white  px-4 py-4">
           <Text className="text-slate-700">KES 🇰🇪 </Text>
         </View>
-      </View>
+      </KeyboardAvoidingView>
 
       <TouchableOpacity
-        className="my-20 flex w-full   items-center justify-center rounded-lg bg-green-400 px-4 py-3 shadow-xl"
+        className="mt-8 flex w-full   items-center justify-center rounded-lg bg-green-400 shadow-xl px-4 py-3"
         onPress={handleSubmit(onSubmit)}
       >
-        <Text className="text-xl font-bold text-white">Continue</Text>
+        <Text className="text-lg text-white">Continue</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 const Index = () => {
-  const [currency, setCurrency] = React.useState(0);
-
+ 
   return (
     <SafeAreaView className="flex-1 bg-white">
       <StatusBar />
       <Stack.Screen options={{ headerShown: false }} />
 
-      <View className="w-full gap-10 p-7">
-        <View className=" h-30  flex w-full">
-          <Text className="text-center text-slate-700">
-            Select the currency you want to send
-          </Text>
-          <View className="mt-5 flex  w-full flex-row  items-center justify-between">
-            <TouchableOpacity onPress={() => setCurrency(0)}>
-              <View className="flex flex-row items-baseline justify-center  gap-2 rounded-lg bg-white shadow-xl shadow-green-400/100">
-                <Text>USD 🇺🇸</Text>
-                <CheckBox
-                  className="bg-inherit"
-                  checked={currency === 0}
-                  onPress={() => setCurrency(0)}
-                  iconType="material-community"
-                  checkedIcon="checkbox-outline"
-                  uncheckedIcon={"checkbox-blank-outline"}
-                  checkedColor="#4ade80"
-                />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setCurrency(1)}>
-              <View className="flex flex-row items-baseline justify-center  gap-2 rounded-lg bg-white shadow-xl shadow-green-400/100">
-                <Text>CNY 🇨🇳 </Text>
-                <CheckBox
-                  className="text-slate-50"
-                  checked={currency === 1}
-                  onPress={() => setCurrency(1)}
-                  iconType="material-community"
-                  checkedIcon="checkbox-outline"
-                  uncheckedIcon={"checkbox-blank-outline"}
-                  checkedColor="#4ade80"
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
+      <ScrollView className="w-full ">
+       
+       <View className="flex justify-center items-center w-full gap-y-10 p-7">
+       <View className="w-full max-w-md">
+          <Form  />
         </View>
-        <View className="w-full">
-          <Form currency={currency} />
-        </View>
-      </View>
+       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
