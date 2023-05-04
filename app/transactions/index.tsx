@@ -78,16 +78,16 @@ const data = [
 const Transactions = () => {
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white p-5">
       <Stack.Screen options={{ headerShown: false }} />
       <StatusBar />
    
      
-      <View className="w-full p-5 flex justify-center items-center">
+      <View className="w-full flex justify-center items-start">
       <View className="w-full  max-w-md">
-        <Text className="my-5 text-center text-xl font-bold">History</Text>
+        <Text className="my-3 text-center text-xl font-bold">History</Text>
         <FlatList
-          className=" mt-3 flex gap-3 "
+          className=" flex gap-3 "
           data={data}
           renderItem={({ item }) => (
             <View className="my-3 flex flex-row  justify-between ">

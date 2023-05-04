@@ -109,7 +109,7 @@ const Index = () => {
             </View>
           </View>
 
-          <View className="flex w-fit max-w-md justify-center gap-2 bg-inherit">
+          <View className="flex w-full max-w-md justify-center gap-2 bg-inherit">
             <Text className="text-center text-white">
               Todays Exchange Rates
             </Text>
@@ -149,7 +149,7 @@ const Index = () => {
             />
           </TouchableOpacity>
         </View>
-        <View className="w-full max-w-md">
+        <View className="w-full max-w-md my-4">
           <FlatList
             className=" mt-3 flex gap-3 "
             data={data}

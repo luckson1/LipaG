@@ -301,10 +301,11 @@ const Index = () => {
             Recipients
           </Text>
           <Button
-            radius={"lg"}
+            radius={"sm"}
             type="solid"
             className="flex flex-row gap-2"
             color={"#4ade80"}
+            size="sm"
             onPress={() => setFormVisible(true)}
           >
             
@@ -342,11 +343,19 @@ const Index = () => {
                   </View>
                 </View>
                 <View className="flex w-1/5">
-                  <TouchableOpacity className="flex items-baseline justify-center   rounded-lg bg-green-400 py-1 shadow-xl shadow-green-400/100">
+                <Button
+            radius={"sm"}
+            type="solid"
+            className="flex flex-row gap-2"
+            color={"#4ade80"}
+            size="xs"
+    
+          >Send</Button>
+                  {/* <TouchableOpacity className="flex items-baseline justify-center   rounded-lg bg-green-400 py-1 shadow-xl shadow-green-400/100">
                     <Text className="mx-auto text-center text-sm text-white">
                       Send
                     </Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
               </View>
             )}
