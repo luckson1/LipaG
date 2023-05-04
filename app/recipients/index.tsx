@@ -122,7 +122,7 @@ const Form = ({
             )}
             name="bank"
           />
-
+  </View>
           <View className=" mt-4 flex w-full items-start justify-between">
             <Text className=" mb-2 text-slate-700">
               Country where bank is located
@@ -157,7 +157,7 @@ const Form = ({
               )}
             />
           </View>
-        </View>
+      
         <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className=" flex w-full  items-start justify-between " keyboardVerticalOffset={Platform.OS==="ios"? -200: -100} >
           <Text className=" mb-2 text-slate-700">Banks&apos;s Swift Code</Text>
