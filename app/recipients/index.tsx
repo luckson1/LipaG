@@ -63,7 +63,9 @@ const Form = ({
   return (
     
     <ScrollView className="flex-1">
-      <SafeAreaView className="items-between flex w-full flex-col justify-between gap-y-5 p-5">
+    
+  <SafeAreaView className="w-full flex justify-center items-center ">
+  <View className="items-between flex w-full flex-col justify-between gap-y-5 p-5 max-w-md">
         <View
           className="flex  flex-row w-full items-center justify-between"
       
@@ -137,7 +139,7 @@ const Form = ({
                 <Select
                   selectedValue={value}
                   width="100%"
-                  className="block w-full rounded-md border-gray-300  px-4 py-3.5"
+                  className="block w-full rounded-md border-gray-300  px-4 py-3 text-base"
                   accessibilityLabel="Choose Country"
                   placeholder="Choose Country"
                   _selectedItem={{
@@ -205,7 +207,9 @@ const Form = ({
             <Text className="text-xl font-bold text-white">Add Recipient</Text>
           </TouchableOpacity>
         </View>
-      </SafeAreaView>
+      </View>
+  </SafeAreaView>
+
     </ScrollView>
   );
 };
@@ -290,7 +294,8 @@ const Index = () => {
       <Stack.Screen options={{ headerShown: false }} />
       <StatusBar />
 
-      <View className="w-full p-5">
+      <View className="w-full  p-5 flex justify-center items-center ">
+        <View className=" max-w-md w-full" >
         <View className="flex w-full flex-row items-center justify-between">
           <Text className="my-10 flex items-center  justify-center text-xl font-bold">
             Recipients
@@ -361,7 +366,7 @@ const Index = () => {
         >
           <Confirmation />
         </Modal>
-      
+      </View>
       </View>
     </SafeAreaView>
   );
