@@ -1,9 +1,8 @@
 
 import React from 'react'
 import { Tabs } from 'expo-router'
-import { StatusBar } from 'expo-status-bar'
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { TouchableOpacity } from 'react-native';
+import { Pressable} from 'react-native';
 import { NativeBaseProvider } from "native-base";
 
 const _layout = () => {
@@ -18,11 +17,11 @@ const _layout = () => {
 <Tabs >
 <Tabs.Screen name='index'    options={{
           title: "Overview",
-          tabBarButton: (props) => <TouchableOpacity {...props}/>,
+          tabBarButton: (props) => <Pressable android_ripple={{color:"#4ade80", radius:40}} {...props} />,
           headerTitleAlign: "center",
           tabBarStyle: {backgroundColor: "#f8fafc"},
           headerTitleStyle:{ fontSize: 16 } ,
-      tabBarActiveTintColor: "#86efac",
+      tabBarActiveTintColor: "#4ade80",
       tabBarInactiveTintColor: "#94a3b8",
       tabBarLabelStyle: {fontSize: 12},
       
@@ -33,10 +32,10 @@ const _layout = () => {
           headerTitleAlign: "center",
           headerTitleStyle:{ fontSize: 16 },
           tabBarStyle: {backgroundColor: "#f8fafc"},
-      tabBarActiveTintColor: "#86efac",
+      tabBarActiveTintColor: "#4ade80",
       tabBarInactiveTintColor: "#94a3b8",
       tabBarLabelStyle: {fontSize: 12},
-      tabBarButton: (props) => <TouchableOpacity {...props} />,
+     tabBarButton: (props) => <Pressable android_ripple={{color:"#4ade80", radius:40}} {...props} />,
           tabBarIcon: ({ color}) => <TabBarIcon name="paper-plane" color={color}/>,
         }} />
           <Tabs.Screen name='recipients'     options={{
@@ -44,10 +43,10 @@ const _layout = () => {
           headerTitleAlign: "center",
           headerTitleStyle:{ fontSize: 16 },
           tabBarStyle: {backgroundColor: "#f8fafc"},
-      tabBarActiveTintColor: "#86efac",
+      tabBarActiveTintColor: "#4ade80",
       tabBarInactiveTintColor: "#94a3b8",
       tabBarLabelStyle: {fontSize: 12},
-      tabBarButton: (props) => <TouchableOpacity {...props} />,
+     tabBarButton: (props) => <Pressable android_ripple={{color:"#4ade80", radius:40}} {...props} />,
           tabBarIcon: ({ color }) => <TabBarIcon name="users" color={color}/>,
         }} />
        
@@ -56,10 +55,10 @@ const _layout = () => {
           headerTitleAlign: "center",
           headerTitleStyle:{ fontSize: 16 },
           tabBarStyle: {backgroundColor: "#f8fafc"},
-      tabBarActiveTintColor: "#86efac",
+      tabBarActiveTintColor: "#4ade80",
       tabBarInactiveTintColor: "#94a3b8",
       tabBarLabelStyle: {fontSize: 12},
-      tabBarButton: (props) => <TouchableOpacity {...props} />,
+      tabBarButton: (props) => <Pressable android_ripple={{color:"#4ade80", radius:40}} {...props} />,
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color}/>,
         }} />
             <Tabs.Screen name='auth'     options={{
@@ -67,7 +66,7 @@ const _layout = () => {
           headerTitleAlign: "center",
           headerTitleStyle:{ fontSize: 16 },
           tabBarStyle: {backgroundColor: "#f8fafc"},
-      tabBarActiveTintColor: "#86efac",
+      tabBarActiveTintColor: "#4ade80",
       tabBarInactiveTintColor: "#94a3b8",
       tabBarLabelStyle: {fontSize: 12},
       href:null,
@@ -79,7 +78,7 @@ const _layout = () => {
           headerTitleAlign: "center",
           headerTitleStyle:{ fontSize: 16 },
           tabBarStyle: {backgroundColor: "#f8fafc"},
-      tabBarActiveTintColor: "#86efac",
+      tabBarActiveTintColor: "#4ade80",
       tabBarInactiveTintColor: "#94a3b8",
       tabBarLabelStyle: {fontSize: 12},
       href:null,
