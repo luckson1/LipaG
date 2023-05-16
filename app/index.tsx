@@ -7,10 +7,12 @@ import {
 } from "react-native";
 import React from "react";
 import { Tabs, useRouter } from "expo-router";
-import { Avatar, Icon } from "@rneui/themed";
+import { Avatar, Button, Icon } from "@rneui/themed";
 import { TouchableHighlight } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { ScrollView } from "react-native";
+
+
 
 const Index = () => {
   const router = useRouter();
@@ -53,12 +55,13 @@ const Index = () => {
       <Tabs.Screen options={{ headerShown: false }} />
       <StatusBar backgroundColor="#4ade80" />
 
-      <ScrollView className=" h-fit min-h-[250px] w-full bg-green-400 px-5 pb-7  pt-10">
-        <View className="flex w-full items-center justify-center">
-          <View className="flex w-full max-w-md flex-row items-start justify-between">
-            <View className="flex w-3/4 flex-row gap-1 py-5">
-              <View className="w-1/4 ">
+      <ScrollView className=" h-1/2 min-h-[270px] w-full bg-green-400 px-5  pb-5 pt-16">
+        <View className="flex w-full h-full items-center gap-y-8 ">
+          <View className="flex w-full max-w-md flex-row items-center  justify-between">
+            <View className="flex w-3/4 flex-row gap-3 items-center justify-center">
+              <View className="w-1/4 flex justify-center items-center ">
                 <Avatar
+                
                   size={64}
                   rounded
                   source={{
@@ -66,7 +69,7 @@ const Index = () => {
                   }}
                 />
               </View>
-              <View className="flex  h-fit w-3/4">
+              <View className="flex  h-fit w-3/5">
                 <Text className=" text-white">Welcome Back</Text>
                 <Text className="text-xl font-semibold  text-white">Jack</Text>
                 <Text className="text-xl font-semibold  text-white">
@@ -75,20 +78,20 @@ const Index = () => {
               </View>
             </View>
 
-            <View className="flex h-fit w-1/4 flex-row gap-2">
+            <View className="flex h-fit w-1/4 flex-row gap-2 ">
               <TouchableHighlight
                 className="w-full flex-1 rounded-full "
                 onPress={() => router.push("/help")}
               >
                 <Icon
                   style={{
-                    padding: 8,
+                  
                     backgroundColor: "inherit",
                   }}
                   name="help"
                   color="white"
                   type="material"
-                  size={26}
+                  size={30}
                 />
               </TouchableHighlight>
               <TouchableHighlight
@@ -97,23 +100,24 @@ const Index = () => {
               >
                 <Icon
                   style={{
-                    padding: 8,
+                   
                     backgroundColor: "inherit",
                     borderRadius: 30,
                   }}
                   name="gear"
                   color="white"
                   type="font-awesome"
+                  size={30}
                 />
               </TouchableHighlight>
             </View>
           </View>
 
-          <View className="flex w-full max-w-md justify-center gap-2 bg-inherit">
-            <Text className="text-center text-white">
+          <View className="flex w-full max-w-md justify-center items-center">
+            <Text className="text-center text-white my-5">
               Todays Exchange Rates
             </Text>
-            <View className=" h-32 w-full  items-center justify-center gap-3 rounded-2xl bg-slate-700 p-5 shadow shadow-yellow-500/100">
+            <View className=" h-32 w-full  items-center justify-center gap-3 rounded-2xl bg-slate-700 p-5 shadow shadow-yellow-500/100 mx-auto mb-5">
               <Text className="text-lg font-bold tracking-widest text-white">
                 {" "}
                 1 🇺🇸 USD = 135.7 🇰🇪 KES
@@ -123,12 +127,27 @@ const Index = () => {
                 1 🇨🇳 CNY = 20.5 🇰🇪 KES
               </Text>
             </View>
+            {/* <Button className="gap-x-2 flex flex-row w-full max-w-sm rounded-lg " 
+            title={"Send"}
+            radius={"md"}
+      
+    icon={{
+      name: 'paper-plane',
+      type: 'font-awesome',
+      size: 18,
+      color: 'white',
+    }}
+
+ 
+            size="lg"
+    /> */}
+
           </View>
         </View>
       </ScrollView>
 
       <View className=" flex w-full items-center justify-center bg-white px-5 py-5">
-        <View className="flex w-full max-w-md flex-row justify-between">
+        <View className="flex w-full max-w-md flex-row justify-between mb-4">
           <Text className="text-xl font-semibold"> History</Text>
           <TouchableOpacity
             className="flex flex-row"
@@ -158,11 +177,12 @@ const Index = () => {
                 <View className="flex w-8/12 flex-row gap-3">
                   <View className="w-1/4">
                     <Avatar
-                      size={48}
+                      size={40}
                       rounded
-                      icon={{ name: "user", type: "font-awesome" }}
+                      icon={{ name: `${item.status==="completed"? "check": item.status==="canceled"? "ban" : item.status==="pending"? "exclamation": item.status==="sending"? "arrow-up": ""}`, type: "font-awesome" }}
                       containerStyle={{
-                        backgroundColor: "#4ade80",
+                        backgroundColor: `${item.status==="completed"? "#4ade80" : item.status==="canceled"? "#ef4444" : item.status==="sending"? "rgb(217 119 6)": item.status==="pending"? "rgb(234 179 8)": ""}`,
+                   
                         marginLeft: 12,
                       }}
                     />
