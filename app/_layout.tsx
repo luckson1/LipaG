@@ -19,6 +19,7 @@ const _layout = () => {
           title: "Overview",
           tabBarButton: (props) => <Pressable android_ripple={{color:"#4ade80", radius:40}} {...props} />,
           headerTitleAlign: "center",
+          
           tabBarStyle: {backgroundColor: "#f8fafc"},
           headerTitleStyle:{ fontSize: 16 } ,
       tabBarActiveTintColor: "#4ade80",
@@ -70,19 +71,16 @@ const _layout = () => {
       tabBarInactiveTintColor: "#94a3b8",
       tabBarLabelStyle: {fontSize: 12},
       href:null,
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color}/>,
+       
         }} />
           
           <Tabs.Screen name='transactions'     options={{
           title: "Transactions",
           headerTitleAlign: "center",
           headerTitleStyle:{ fontSize: 16 },
-          tabBarStyle: {backgroundColor: "#f8fafc"},
-      tabBarActiveTintColor: "#4ade80",
-      tabBarInactiveTintColor: "#94a3b8",
-      tabBarLabelStyle: {fontSize: 12},
+       
       href:null,
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color}/>,
+         
         }} />
         
 
