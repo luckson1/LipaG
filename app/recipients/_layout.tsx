@@ -13,8 +13,22 @@ const _layout = () => {
         }}
       />
       <Stack.Screen
-        name="addRecipient"
+        name="add"
+        
         options={{
+          
+          // Set the presentation mode to modal for our modal route.
+          presentation: "modal",
+               // Hide the header for all other routes.
+               headerShown: false,
+               
+        }}
+      />
+      <Stack.Screen
+        name="confirmation"
+        
+        options={{
+          
           // Set the presentation mode to modal for our modal route.
           presentation: "modal",
                // Hide the header for all other routes.
