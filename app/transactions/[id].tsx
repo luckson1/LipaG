@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { KeyboardAvoidingView } from 'native-base'
 import { TextInput } from 'react-native'
 import { z } from 'zod'
+import { Divider } from '@rneui/base'
 
 
 
@@ -68,9 +69,9 @@ const TransferInfo=({setTransferInfoVisible, setOwnershipVisible}: {setTransferI
     
          <View className="flex w-full items-center justify-center py-3 border-b-2 border-slate-400">
          <Text className="text-2xl">Pay by bank transfer</Text>
-          <View className="w-full bg-slate-100 rounded-lg h-48 p-5 justify-between items-start my-4">
-           <View className="w-full flex justify-center items-start">
-           <Icon name="info" size={48} type="material" color={"gray"}/>
+          <View className="w-full bg-slate-100 rounded-xl shadow h-48 p-5 justify-between items-start my-4">
+           <View className="w-full flex justify-center items-center">
+           <Icon name="info" size={48} type="material" color={"#0ea5e9"}/>
            </View>
             
 <Text>1. Make a wire transfer to the accounts below:</Text>
@@ -250,9 +251,11 @@ const PaymentMethod = ({
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity className=" mt-5 flex w-full items-center justify-center rounded-xl bg-slate-200  py-5 shadow-lg shadow-green-400/100">
-          <View className=" w-full">
+        <TouchableOpacity className=" mt-5 flex w-full items-center justify-center   py-5 shadow-lg shadow-green-400/100">
+          <View className=" w-full gap-y-3">
+          <Divider />
             <Text className=" text-center text-xl">Mpesa</Text>
+           
             <View className="flex w-full flex-row items-center justify-between">
               <View className="w-1/6">
                 <Icon
@@ -280,9 +283,11 @@ const PaymentMethod = ({
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity className=" mt-5 flex w-full items-center justify-center rounded-xl bg-slate-200  py-5 shadow-lg shadow-green-400/100">
-          <View className="w-full">
+        <TouchableOpacity className=" mt-5 flex w-full items-center justify-center   py-5 shadow-lg shadow-green-400/100">
+          <View className="w-full gap-y-3">
+          <Divider />
             <Text className=" text-center text-xl">PesaLink</Text>
+           
             <View className="flex w-full flex-row items-center justify-between">
               <View className="w-1/6">
                 <Icon
@@ -310,9 +315,11 @@ const PaymentMethod = ({
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity className=" mt-5 flex w-full items-center justify-center rounded-xl bg-slate-200  py-5 shadow-lg shadow-green-400/100" onPress={()=> {  setBankPolicyVisible(true),  setPaymentMethodVisible(false)}}>
-          <View className="w-full">
+        <TouchableOpacity className=" mt-5 flex w-full items-center justify-center   py-5 shadow-lg shadow-green-400/100" onPress={()=> {  setBankPolicyVisible(true),  setPaymentMethodVisible(false)}}>
+          <View className="w-full gap-y-3">
+          <Divider />
             <Text className=" text-center text-xl">Manual Bank Transfer</Text>
+         
             <View className="flex flex-row items-center justify-between">
               <View className="w-1/6">
                 <Icon
