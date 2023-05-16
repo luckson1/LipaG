@@ -94,11 +94,12 @@ const Transactions = () => {
               <View className="flex w-8/12 flex-row gap-3">
                 <View className="w-1/4">
                   <Avatar
-                    size={48}
+                    size={40}
                     rounded
-                    icon={{ name: "user", type: "font-awesome" }}
+                    icon={{ name: `${item.status==="completed"? "check": item.status==="canceled"? "ban" : item.status==="pending"? "exclamation": item.status==="sending"? "arrow-up": ""}`, type: "font-awesome" }}
                     containerStyle={{
-                      backgroundColor: "#4ade80",
+                      backgroundColor: `${item.status==="completed"? "#4ade80" : item.status==="canceled"? "#ef4444" : item.status==="sending"? "rgb(217 119 6)": item.status==="pending"? "rgb(234 179 8)": ""}`,
+                 
                       marginLeft: 12,
                     }}
                   />
