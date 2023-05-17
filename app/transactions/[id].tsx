@@ -4,10 +4,11 @@ import { Modal, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Platform
 import { CheckBox, Icon } from '@rneui/themed'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { KeyboardAvoidingView } from 'native-base'
+import { KeyboardAvoidingView} from 'native-base'
 import { TextInput } from 'react-native'
 import { z } from 'zod'
 import { Divider } from '@rneui/base'
+import { Stack, useRouter } from 'expo-router'
 
 
 
@@ -61,7 +62,8 @@ const BankPolicy=({setBankPolicyVisible, setOwnershipVisible}: {setBankPolicyVis
     )
 }
 const TransferInfo=({setTransferInfoVisible, setOwnershipVisible}: {setTransferInfoVisible: React.Dispatch<React.SetStateAction<boolean>>, setOwnershipVisible: React.Dispatch<React.SetStateAction<boolean>>})=> {
-    return (
+  const router=useRouter()  
+  return (
         < ScrollView className="flex-1">
             <SafeAreaView className="flex flex-1 flex-col items-start justify-center  p-8">
    
@@ -111,7 +113,7 @@ const TransferInfo=({setTransferInfoVisible, setOwnershipVisible}: {setTransferI
           <View className="flex gap-y-4 w-full my-4">
           <TouchableOpacity
             className="rounded-lg w-full py-3 bg-green-400 flex justify-center items-center "
-            onPress={() =>{ setTransferInfoVisible(false)}}
+            onPress={() =>router.push("/transactions/overview/id")}
           >
            <Text className="text-white text-lg"> I have made the transfer</Text>
           </TouchableOpacity>
@@ -352,6 +354,7 @@ const PaymentMethod = ({
 };
 
 const TransactionId = () => {
+  <Stack.Screen  options={{headerShown: false}} />
     const [paymentMethodVisible, setPaymentMethodVisible] = useState(true);
     const [bankPolicyVisible, setBankPolicyVisible] = useState(false);
     const [ownershipVisible, setOwnershipVisible] = useState(false);
