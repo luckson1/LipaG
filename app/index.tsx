@@ -1,9 +1,9 @@
 
 import React from 'react'
-import { Redirect, Stack } from 'expo-router'
+import { Redirect} from 'expo-router'
 
 const index = () => {
-    const isAuth =false
+    const isAuth =true
   return (
 
  
