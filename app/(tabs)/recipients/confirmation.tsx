@@ -7,10 +7,10 @@ import { ScrollView } from "react-native";
 const Confirmation = () => {
     const router=useRouter()
     return (
-      <ScrollView className="flex-1">
+      <ScrollView className="flex-1 bg-white">
         <SafeAreaView className="flex w-full flex-col items-center justify-between  p-5">
-          <View className=" my-5 w-full rounded-xl bg-white py-3 shadow-xl">
-            <Text className="text-center text-xl">
+          <View className=" my-5 w-full rounded-xl bg-slate-100 border border-slate-300 py-3 shadow-xl">
+            <Text className=" mx-5 font-bold text-xl">
               Hoo Lee Sheet Inc&apos;s Details
             </Text>
             <View className="flex w-full flex-row justify-between px-5 py-3">
@@ -30,8 +30,8 @@ const Confirmation = () => {
               <Text className="text-end">1234567891011123</Text>
             </View>
           </View>
-          <View className=" my-5 w-full rounded-xl bg-white py-3 shadow-xl">
-            <Text className="text-center text-xl">Transfer Details Details</Text>
+          <View className=" my-5 w-full rounded-xl bg-slate-100 border border-slate-300 py-3 shadow-xl">
+            <Text className=" mx-5 font-bold text-xl">Transfer Details Details</Text>
             <View className="flex w-full flex-row justify-between px-5 py-3">
               <Text className="text-start">The Recipient Gets:</Text>
               <Text className="text-end"> USD 10,000</Text>
