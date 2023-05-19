@@ -48,7 +48,7 @@ const RecipientForm = () => {
 
   return (
     
-    <ScrollView className="flex-1">
+    <ScrollView className="flex-1 bg-white">
       <Tabs.Screen     options={{href:null}} />
     
   <SafeAreaView className="w-full flex justify-center items-center ">
