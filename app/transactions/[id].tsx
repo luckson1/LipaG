@@ -1,19 +1,15 @@
 
 import React, { useState } from 'react'
-import { Modal, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Platform  } from 'react-native'
-import { CheckBox, Icon } from '@rneui/themed'
-import { Controller, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { KeyboardAvoidingView} from 'native-base'
-import { TextInput } from 'react-native'
-import { z } from 'zod'
+import { Modal , Text, View, SafeAreaView, TouchableOpacity, ScrollView, Platform  } from 'react-native'
+import { Icon } from '@rneui/themed'
+
 import { Divider } from '@rneui/base'
 import { Stack, useRouter } from 'expo-router'
 
 
 
-
-const BankPolicy=({setBankPolicyVisible, setOwnershipVisible}: {setBankPolicyVisible: React.Dispatch<React.SetStateAction<boolean>>, setOwnershipVisible: React.Dispatch<React.SetStateAction<boolean>>})=> {
+type ModalType= "paymentMethod" | "bankPolicy" | "transferInfo"
+const BankPolicy=({setIsShowModal}: {setIsShowModal: React.Dispatch<React.SetStateAction<ModalType>>})=> {
     return (
         <SafeAreaView className="flex flex-1 flex-col items-center justify-center  p-5">
    
@@ -34,26 +30,42 @@ const BankPolicy=({setBankPolicyVisible, setOwnershipVisible}: {setBankPolicyVis
                   name="account-balance"
                   type="material"
                   size={40}
-                  color={"#9700b9"}
+                  color={"white"}
+                  backgroundColor={"#9700b9"}
+                  borderRadius={10}
                 />
                 <Text className="w-[80%] text-lg text-slate-700">Make a Wire Transfer from your account to our bank account</Text>
           </View>
           <View className="flex flex-row w-full my-5 gap-x-3 justify-center items-center">
           <Icon
+                      name="check"
+                      type="material"
+                      size={40}
+                      color={"white"}
+                      backgroundColor={"#4ade80"}
+                      borderRadius={10}
+                 
+                />
+                <Text className="w-[80%] text-lg text-slate-700">Get the bank reference number after sending us the funds, to confirm the payment</Text>
+          </View>
+          <View className="flex flex-row w-full my-5 gap-x-3 justify-center items-center ">
+          <Icon
                       name="arrow-upward"
                       type="material"
                       size={40}
-                      color={"#4ade80"}
+                      color={"white"}
+                      backgroundColor={"#4ade80"}
+                      borderRadius={10}
                  
                 />
-                <Text className="w-[80%] text-lg text-slate-700">Once we receive the money, we will send it to the recipient</Text>
+                <Text className="w-[80%] text-lg text-slate-700">Once we confirm the receipt of the funds, we will send it to the recipient</Text>
           </View>
           
   
                   
           <TouchableOpacity
             className="rounded-lg w-full py-3 bg-green-400 flex justify-center items-center "
-            onPress={() =>{ setBankPolicyVisible(false), setOwnershipVisible(true)}}
+            onPress={() => setIsShowModal('transferInfo')}
           >
            <Text className="text-white text-lg"> Understood</Text>
           </TouchableOpacity>
@@ -61,7 +73,7 @@ const BankPolicy=({setBankPolicyVisible, setOwnershipVisible}: {setBankPolicyVis
         </SafeAreaView>
     )
 }
-const TransferInfo=({setTransferInfoVisible, setOwnershipVisible}: {setTransferInfoVisible: React.Dispatch<React.SetStateAction<boolean>>, setOwnershipVisible: React.Dispatch<React.SetStateAction<boolean>>})=> {
+const TransferInfo=()=> {
   const router=useRouter()  
   return (
         < ScrollView className="flex-1">
@@ -119,13 +131,13 @@ const TransferInfo=({setTransferInfoVisible, setOwnershipVisible}: {setTransferI
           </TouchableOpacity>
           <TouchableOpacity
             className="rounded-lg w-full py-3 bg-inherit flex justify-center items-center border border-green-400"
-            onPress={() =>{ setTransferInfoVisible(false)}}
+            onPress={() => router.push("/transfers/overview/id")}
           >
            <Text className=" text-lg"> I will make the transfer later</Text>
           </TouchableOpacity>
           <TouchableOpacity
             className="rounded-lg w-full py-3 bg-inherit flex justify-center items-center border border-green-400"
-            onPress={() =>{ setTransferInfoVisible(false)}}
+            onPress={() => router.push("/transactionsoverview/id")}
           >
            <Text className=" text-lg"> I need help</Text>
           </TouchableOpacity>
@@ -134,129 +146,31 @@ const TransferInfo=({setTransferInfoVisible, setOwnershipVisible}: {setTransferI
         </ScrollView>
     )
 }
-const AccountOwnership=({setOwnershipVisible, setTransferInfoVisible}: {setTransferInfoVisible:React.Dispatch<React.SetStateAction<boolean>>, setOwnershipVisible: React.Dispatch<React.SetStateAction<boolean>>})=> {
 
-    const nameValidator=z.object({name: z.string(), owner: z.number()})
-    type Values= z.infer<typeof nameValidator>
-    const { handleSubmit, control, formState: {errors}, setValue, watch} = useForm<Values>({
-        resolver: zodResolver(nameValidator),
-      });
-      const owner=watch('owner')
-    return (
-        <SafeAreaView className="flex flex-1 flex-col items-center justify-center  p-5">
-   
-     <Text className="text-2xl">Are You sending from your own Account?</Text>
-    
-          <Controller
-            control={control}
-            render={({ field: {  onBlur } }) => (
-                <>
-
-          <View className="flex flex-row w-full my-5 gap-x-3 justify-center items-center">
-          <CheckBox
-                  className="bg-inherit"
-                  checked={owner===1}
-                  onBlur={onBlur}
-                  onPress={() => setValue('owner', 1) }
-                  iconType="material-community"
-                  checkedIcon="checkbox-outline"
-                  uncheckedIcon={"checkbox-blank-outline"}
-                  checkedColor="#4ade80"
-                />
-            <Text className="w-[80%] text-lg text-slate-700">Yes, I am the account holder</Text>
-
-          </View>
-          <View className="flex flex-row w-full my-5 gap-x-3 justify-center items-center">
-          <CheckBox
-                    className="bg-inherit"
-                    checked={owner===2}
-                    onPress={() => setValue('owner', 2) }
-                    iconType="material-community"
-                    checkedIcon="checkbox-outline"
-                    uncheckedIcon={"checkbox-blank-outline"}
-                    checkedColor="#4ade80"
-                />
-                <Text className="w-[80%] text-lg text-slate-700">Yes, But it is a joint Account</Text>
-          </View>
-                </>
-          
-            )}
-            name="owner"
-          />
-
-          {owner===2 &&       <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className=" flex w-full  items-start justify-between my-5" keyboardVerticalOffset={Platform.OS==="ios"? -64: -32}>
-          <Text className=" mb-2 text-slate-700">Name of the other account holder</Text>
-          {errors.name && (
-            <Text className=" mb-2 text-red-500">{errors.name.message}</Text>
-          )}
-          <Controller
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                onBlur={onBlur}
-                onChangeText={onChange}
-                    className= {`block w-full rounded-md border  px-4 py-3 ${errors.name? "border-red-500  focus:border-green-500 focus:ring-green-500": " border-gray-300  focus:border-green-500 focus:ring-green-500"}`}
-                value={value}
-              />
-            )}
-            name="name"
-          />
-        </KeyboardAvoidingView>}
-          <View className="flex flex-row w-full my-5 gap-x-3 justify-center items-center">
-          <CheckBox
-                  className="bg-inherit"
-                  checked={false}
-                  iconType="material-community"
-                  checkedIcon="checkbox-outline"
-                  uncheckedIcon={"checkbox-blank-outline"}
-                  checkedColor="#4ade80"
-                />
-                <Text className="w-[80%] text-lg text-slate-700">No, I am not the account holder. You cannot send money with an account that does not belong to you</Text>
-          </View>
-       
-  
-                  
-          <TouchableOpacity
-            className="rounded-lg w-full py-3 bg-green-400 flex justify-center items-center "
-            onPress={() => {setOwnershipVisible(false), setTransferInfoVisible(true)}}
-          >
-           <Text className="text-white text-lg"> Continue</Text>
-          </TouchableOpacity>
-       
-        </SafeAreaView>
-    )
-}
-
-const PaymentMethod = ({
-  setPaymentMethodVisible,
-  setBankPolicyVisible
-}: {
-  setPaymentMethodVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setBankPolicyVisible: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const PaymentMethod = ({setIsShowModal}: {setIsShowModal: React.Dispatch<React.SetStateAction<ModalType>>})=> {
   return (
     <ScrollView className="flex-1">
       <SafeAreaView className="flex w-full flex-col items-center justify-between  p-5">
         <View className="my-5 flex w-full  flex-row items-center justify-between">
-          <Text className="text-xl">How do you want to pay?</Text>
+          
           <TouchableOpacity
             className="rounded-full bg-slate-300"
-            onPress={() => setPaymentMethodVisible(false)}
+            onPress={() => setIsShowModal('paymentMethod')}
           >
             <Icon
-              name="close"
+              name="arrow-left"
               type="simple-line-icons"
               size={30}
-              color={"red"}
+              color={"gray"}
             />
           </TouchableOpacity>
+          <Text className="text-xl">How do you want to pay?</Text>
         </View>
 
         <TouchableOpacity className=" mt-5 flex w-full items-center justify-center   py-5 shadow-lg shadow-green-400/100">
           <View className=" w-full gap-y-3">
           <Divider />
-            <Text className=" text-center text-xl">Mpesa</Text>
+            <Text className="  text-xl">Mpesa</Text>
            
             <View className="flex w-full flex-row items-center justify-between">
               <View className="w-1/6">
@@ -288,7 +202,7 @@ const PaymentMethod = ({
         <TouchableOpacity className=" mt-5 flex w-full items-center justify-center   py-5 shadow-lg shadow-green-400/100">
           <View className="w-full gap-y-3">
           <Divider />
-            <Text className=" text-center text-xl">PesaLink</Text>
+            <Text className="  text-xl">PesaLink</Text>
            
             <View className="flex w-full flex-row items-center justify-between">
               <View className="w-1/6">
@@ -317,10 +231,10 @@ const PaymentMethod = ({
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity className=" mt-5 flex w-full items-center justify-center   py-5 shadow-lg shadow-green-400/100" onPress={()=> {  setBankPolicyVisible(true),  setPaymentMethodVisible(false)}}>
+        <TouchableOpacity className=" mt-5 flex w-full items-center justify-center   py-5 shadow-lg shadow-green-400/100" onPress={()=> { setIsShowModal('bankPolicy')}}>
           <View className="w-full gap-y-3">
           <Divider />
-            <Text className=" text-center text-xl">Manual Bank Transfer</Text>
+            <Text className="  text-xl">Manual Bank Transfer</Text>
          
             <View className="flex flex-row items-center justify-between">
               <View className="w-1/6">
@@ -355,39 +269,32 @@ const PaymentMethod = ({
 
 const TransactionId = () => {
   <Stack.Screen  options={{headerShown: false}} />
-    const [paymentMethodVisible, setPaymentMethodVisible] = useState(true);
-    const [bankPolicyVisible, setBankPolicyVisible] = useState(false);
-    const [ownershipVisible, setOwnershipVisible] = useState(false);
-    const [transferInfoVisible, setTransferInfoVisible] = useState(false);
+
+    const [isShowModal, setIsShowModal] = useState<ModalType>('paymentMethod');
+
   return (
 <SafeAreaView className='flex-1 bg-white'>
 <Modal
-        visible={paymentMethodVisible}
+        visible={isShowModal==="paymentMethod"}
         animationType="slide"
-        onRequestClose={() => setPaymentMethodVisible(false)}
+        
       >
-        <PaymentMethod setPaymentMethodVisible={setPaymentMethodVisible} setBankPolicyVisible={setBankPolicyVisible}/>
+        <PaymentMethod setIsShowModal={setIsShowModal} />
       </Modal>
       <Modal
-        visible={bankPolicyVisible}
-        animationType="slide"
-        onRequestClose={() => setBankPolicyVisible(false)}
+       visible={isShowModal==="bankPolicy"}
+       animationType="slide"
+     
       >
-        <BankPolicy setBankPolicyVisible={setBankPolicyVisible} setOwnershipVisible={setOwnershipVisible} />
+        <BankPolicy setIsShowModal={setIsShowModal} />
       </Modal>
+      
       <Modal
-        visible={ownershipVisible}
-        animationType="slide"
-        onRequestClose={() => setOwnershipVisible(false)}
+      visible={isShowModal==="transferInfo"}
+      animationType="slide"
+      
       >
-        <AccountOwnership setOwnershipVisible={setOwnershipVisible} setTransferInfoVisible={setTransferInfoVisible}/>
-      </Modal>
-      <Modal
-        visible={transferInfoVisible}
-        animationType="slide"
-        onRequestClose={() => setTransferInfoVisible(false)}
-      >
-        <TransferInfo setOwnershipVisible={setOwnershipVisible} setTransferInfoVisible={setTransferInfoVisible}/>
+        <TransferInfo />
       </Modal>
 
 </SafeAreaView>
