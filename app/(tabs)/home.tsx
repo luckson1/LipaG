@@ -53,9 +53,9 @@ const Index = () => {
   return (
     <SafeAreaView className="flex-1 ">
       <Tabs.Screen options={{ headerShown: false }} />
-      <StatusBar backgroundColor="#4ade80" />
+      <StatusBar backgroundColor="rgb(20 184 166)" />
 
-      <ScrollView className=" h-1/2 min-h-[270px] w-full bg-green-400 px-5  pb-5 pt-16">
+      <ScrollView className=" h-1/2 min-h-[270px] w-full bg-teal-500 px-5  pb-5 pt-16">
         <View className="flex w-full h-full items-center gap-y-8 ">
           <View className="flex w-full max-w-md flex-row items-center  justify-between">
             <View className="flex w-3/4 flex-row gap-3 items-center justify-center">
