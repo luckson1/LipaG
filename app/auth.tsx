@@ -88,6 +88,7 @@ const [isAgreed, setIsAgreed]=useState(true)
 </View>
 <View className="flex-[20%] w-full p-5 flex justify-center items-center">
 <Pressable
+android_ripple={{color:"#4ade80", radius:40}}
       disabled={!isAgreed}
         onPress={handleSubmit(onSubmit)}
         className={` rounded-lg flex-row px-4 py-3 w-full flex justify-around items-center mb-4 absolute bottom-10 ${isAgreed? " bg-green-400 ": "bg-slate-200" }`}>

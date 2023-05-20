@@ -16,7 +16,7 @@ const _layout = () => {
 <Tabs >
 <Tabs.Screen name='home'    options={{
           title: "Overview",
-          tabBarButton: (props) => <Pressable android_ripple={{color:"#4ade80", radius:40}} {...props} />,
+          tabBarButton: (props) => <Pressable android_ripple={{color:"rgb(100 116 139 / var(--tw-bg-opacity))", radius:40}} {...props} />,
           headerTitleAlign: "center",
           
           tabBarStyle: {backgroundColor: "#f8fafc"},
@@ -35,7 +35,7 @@ const _layout = () => {
       tabBarActiveTintColor: "#4ade80",
       tabBarInactiveTintColor: "#94a3b8",
       tabBarLabelStyle: {fontSize: 12},
-     tabBarButton: (props) => <Pressable android_ripple={{color:"#4ade80", radius:40}} {...props} />,
+     tabBarButton: (props) => <Pressable android_ripple={{color:"rgb(100 116 139 / var(--tw-bg-opacity))", radius:40}} {...props} />,
           tabBarIcon: ({ color}) => <TabBarIcon name="paper-plane" color={color}/>,
         }} />
           <Tabs.Screen name='recipients'     options={{
@@ -46,7 +46,7 @@ const _layout = () => {
       tabBarActiveTintColor: "#4ade80",
       tabBarInactiveTintColor: "#94a3b8",
       tabBarLabelStyle: {fontSize: 12},
-     tabBarButton: (props) => <Pressable android_ripple={{color:"#4ade80", radius:40}} {...props} />,
+     tabBarButton: (props) => <Pressable android_ripple={{color:"rgb(100 116 139 / var(--tw-bg-opacity))", radius:40}} {...props} />,
           tabBarIcon: ({ color }) => <TabBarIcon name="users" color={color}/>,
         }} />
        
@@ -58,7 +58,7 @@ const _layout = () => {
       tabBarActiveTintColor: "#4ade80",
       tabBarInactiveTintColor: "#94a3b8",
       tabBarLabelStyle: {fontSize: 12},
-      tabBarButton: (props) => <Pressable android_ripple={{color:"#4ade80", radius:40}} {...props} />,
+      tabBarButton: (props) => <Pressable android_ripple={{color:"rgb(100 116 139 / var(--tw-bg-opacity))", radius:40}} {...props} />,
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color}/>,
         }} />
             {/* <Tabs.Screen name='auth'     options={{

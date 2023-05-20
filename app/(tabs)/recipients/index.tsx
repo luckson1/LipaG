@@ -43,10 +43,10 @@ const Index = () => {
               type="solid"
               className="flex flex-row gap-2"
               color={"#4ade80"}
-              size="sm"
+             
               onPress={() => router.push("/recipients/add")}
             >
-              <Icon name="plus" type="font-awesome" color={"white"} /> Add
+              <Icon name="plus" size={24} type="font-awesome" color={"white"} /> Add
             </Button>
           </View>
           <View className="w-full">
@@ -81,10 +81,12 @@ const Index = () => {
                     <Button
                       radius={"sm"}
                       type="solid"
-                      className="flex flex-row gap-2"
+                      className="flex flex-row"
                       color={"#4ade80"}
+                      onPress={() => router.push("transactions/id")}
                     >
-                      Send
+                       <Icon name="send" type="font-awesome" color={"white"} />
+                    
                     </Button>
                     {/* <TouchableOpacity className="flex items-baseline justify-center   rounded-lg bg-green-400 py-1 shadow-xl shadow-green-400/100">
                     <Text className="mx-auto text-center text-sm text-white">

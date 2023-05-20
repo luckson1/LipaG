@@ -168,10 +168,14 @@ const Onboarding = () => {
     />
      <View className='w-full flex flex-row justify-between absolute bottom-16 px-5'>
 
-<Pressable className='w-1/3 py-3 rounded-lg bg-slate-100 flex justify-center items-center' onPress={()=>router.push("/auth")}>
+<Pressable 
+android_ripple={{color:"#4ade80", radius:40}}
+className='w-1/3 py-3 rounded-lg bg-slate-100 flex justify-center items-center' onPress={()=>router.push("/auth")}>
      <Text className='text-lg text-slate-700'>Login</Text>
  </Pressable>
- <Pressable className='w-1/3 py-3 rounded-lg bg-slate-100 flex justify-center items-center' onPress={()=>router.push("/auth")}>
+ <Pressable
+ android_ripple={{color:"#4ade80", radius:40}}
+ className='w-1/3 py-3 rounded-lg bg-slate-100 flex justify-center items-center' onPress={()=>router.push("/auth")}>
      <Text className='text-lg text-slate-700 '>Sign up</Text>
  </Pressable>
 </View>
