@@ -173,17 +173,22 @@ const Index = () => {
             className=" mt-3 flex gap-3 "
             data={data}
             renderItem={({ item }) => (
-              <View className="my-3 flex flex-row  justify-between ">
+              <View className="my-3 flex flex-row  justify-between">
                 <View className="flex w-8/12 flex-row gap-3">
                   <View className="w-1/4">
                     <Avatar
-                      size={40}
+                      size={44}
                       rounded
-                      icon={{ name: `${item.status==="completed"? "check": item.status==="canceled"? "ban" : item.status==="pending"? "exclamation": item.status==="sending"? "arrow-up": ""}`, type: "font-awesome" }}
+                  
+                      icon={{ name: `${item.status==="completed"? "check": item.status==="canceled"? "ban" : item.status==="pending"? "exclamation": item.status==="sending"? "arrow-up": ""}`, type: "font-awesome",  color: `${item.status==="completed"? "#4ade80" : item.status==="canceled"? "#ef4444" : item.status==="sending"? "rgb(217 119 6)": item.status==="pending"? "rgb(234 179 8)": ""}` }}
                       containerStyle={{
-                        backgroundColor: `${item.status==="completed"? "#4ade80" : item.status==="canceled"? "#ef4444" : item.status==="sending"? "rgb(217 119 6)": item.status==="pending"? "rgb(234 179 8)": ""}`,
-                   
+                        backgroundColor: "white",
+                        borderColor:  "rgb(241 245 249 / var(--tw-bg-opacity))",
+                        
+                        
+                  
                         marginLeft: 12,
+                        
                       }}
                     />
                   </View>
