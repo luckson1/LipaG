@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import { Modal , Text, View, SafeAreaView, TouchableOpacity, ScrollView, Platform  } from 'react-native'
+import { Modal , Text, View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native'
 import { Icon } from '@rneui/themed'
 
 import { Divider } from '@rneui/base'
@@ -11,9 +11,23 @@ import { Stack, useRouter } from 'expo-router'
 type ModalType= "paymentMethod" | "bankPolicy" | "transferInfo"
 const BankPolicy=({setIsShowModal}: {setIsShowModal: React.Dispatch<React.SetStateAction<ModalType>>})=> {
     return (
-        <SafeAreaView className="flex flex-1 flex-col items-center justify-center  p-5">
+        <SafeAreaView className="flex flex-1 flex-col items-start justify-start  p-5">
    
-     
+   <View className="mt-5 my-10 flex w-full  flex-row items-center justify-between px-3">
+          
+          <TouchableOpacity
+            className="rounded-full p-2"
+            onPress={() => setIsShowModal('paymentMethod')}
+          >
+            <Icon
+              name="arrow-left"
+              type="font-awesome"
+              size={30}
+              color={"gray"}
+            />
+          </TouchableOpacity>
+          <Text className="text-xl">How to make the payment?</Text>
+        </View>
     
           <View className="flex flex-row w-full my-5 gap-x-3 justify-center items-center">
           <Icon
@@ -73,16 +87,30 @@ const BankPolicy=({setIsShowModal}: {setIsShowModal: React.Dispatch<React.SetSta
         </SafeAreaView>
     )
 }
-const TransferInfo=()=> {
+const TransferInfo=({setIsShowModal}: {setIsShowModal: React.Dispatch<React.SetStateAction<ModalType>>})=> {
   const router=useRouter()  
   return (
         < ScrollView className="flex-1">
             <SafeAreaView className="flex flex-1 flex-col items-start justify-center  p-8">
    
-     
+            <View className="mt-5  flex w-full  flex-row items-center justify-between ">
+          
+          <TouchableOpacity
+            className="rounded-full p-2"
+            onPress={()=> { setIsShowModal('bankPolicy')}}
+          >
+            <Icon
+              name="arrow-left"
+              type="font-awesome"
+              size={30}
+              color={"gray"}
+            />
+          </TouchableOpacity>
+          <Text className="text-xl">Pay by making bank transfer?</Text>
+        </View>
     
          <View className="flex w-full items-center justify-center py-3 border-b-2 border-slate-400">
-         <Text className="text-2xl">Pay by bank transfer</Text>
+       
           <View className="w-full bg-slate-100 rounded-xl shadow h-48 p-5 justify-between items-start my-4">
            <View className="w-full flex justify-center items-center">
            <Icon name="info" size={48} type="material" color={"#0ea5e9"}/>
@@ -148,18 +176,19 @@ const TransferInfo=()=> {
 }
 
 const PaymentMethod = ({setIsShowModal}: {setIsShowModal: React.Dispatch<React.SetStateAction<ModalType>>})=> {
+  const router=useRouter()
   return (
     <ScrollView className="flex-1">
       <SafeAreaView className="flex w-full flex-col items-center justify-between  p-5">
-        <View className="my-5 flex w-full  flex-row items-center justify-between">
+        <View className="my-5 flex w-full  flex-row items-center justify-between px-3">
           
           <TouchableOpacity
-            className="rounded-full bg-slate-300"
-            onPress={() => setIsShowModal('paymentMethod')}
+            className="rounded-full p-2"
+            onPress={() => router.back()}
           >
             <Icon
               name="arrow-left"
-              type="simple-line-icons"
+              type="font-awesome"
               size={30}
               color={"gray"}
             />
@@ -294,7 +323,7 @@ const TransactionId = () => {
       animationType="slide"
       
       >
-        <TransferInfo />
+        <TransferInfo setIsShowModal={setIsShowModal}/>
       </Modal>
 
 </SafeAreaView>
