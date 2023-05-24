@@ -177,7 +177,7 @@ const {
 });
   return (
 <View className='w-full h-full  my-5'>
- <View className='w-full h-fit mt-7 bg-slate-100 rounded-md shadow-xl border border-slate-300 p-3'>
+ <View className='w-full h-fit mt-7 bg-slate-50 bg-opacity-50 rounded-md shadow-xl border border-slate-300 p-3'>
  <Text className='text-xl font-semibold text-slate-700 mt-3'>Transactions details</Text>
   <View className='flex flex-row w-full mt-3 justify-between'>
     <Text className='text-base'>Amount to send to us</Text>
@@ -192,14 +192,14 @@ const {
     <Text className='text-base'>1,357,000</Text>
   </View>
  </View>
-{ isConfirmed && <View className='w-full h-fit mt-7 bg-slate-100 rounded-md shadow-xl border border-slate-300 p-3'>
+{ isConfirmed && <View className='w-full h-fit mt-7 bg-slate-50 bg-opacity-50 rounded-md shadow-xl border border-slate-300 p-3'>
 <Text className='text-xl font-semibold text-slate-700 mt-3'>Payment Confirmation</Text>
   <View className='flex flex-row w-full mt-3 justify-between'>
     <Text className='text-base'>Bank reference number</Text>
     <Text className='text-base'>RQ67MT6I</Text>
   </View>
   </View>}
-  <View className='w-full h-fit mt-7 bg-slate-100 rounded-md shadow-xl border border-slate-300 p-3'>
+  <View className='w-full h-fit mt-7 bg-slate-50 bg-opacity-50 rounded-md shadow-xl border border-slate-300 p-3'>
   <Text className='text-xl font-semibold text-slate-700 mt-3'>Recipient&apos;s details</Text>
   <View className='flex flex-row w-full mt-3 justify-between'>
     <Text className='text-base'>Name</Text>
@@ -214,7 +214,7 @@ const {
     <Text className='text-base'>80948573850</Text>
   </View>
   </View>
-  { !isConfirmed && <View className='w-full h-fit mt-7 bg-slate-100 rounded-md shadow-xl border border-slate-300 p-3'>
+  { !isConfirmed && <View className='w-full h-fit mt-7 bg-slate-50 bg-opacity-50 rounded-md shadow-xl border border-slate-300 p-3'>
 <Text className='text-xl font-semibold text-slate-700 mt-3'>Payment confirmation</Text>
   <View className='flex  w-full mt-3 justify-between'>
   <View className=" flex w-full items-start justify-between ">

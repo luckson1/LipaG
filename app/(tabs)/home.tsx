@@ -148,7 +148,7 @@ const Index = () => {
 
       <View className=" flex w-full items-center justify-center bg-white px-5 py-5">
         <View className="flex w-full max-w-md flex-row justify-between mb-4">
-          <Text className="text-xl font-semibold"> History</Text>
+          <Text className="text-xl font-semibold text-slate-600"> History</Text>
           <TouchableOpacity
             className="flex flex-row"
             onPress={() => router.push("/transactions")}
@@ -175,26 +175,25 @@ const Index = () => {
             renderItem={({ item }) => (
               <View className="my-3 flex flex-row  justify-between">
                 <View className="flex w-8/12 flex-row gap-3">
-                  <View className="w-1/4">
+                  <View className="w-1/4 text-teal-500 ">
                     <Avatar
+                    
                       size={44}
                       rounded
                   
                       icon={{ name: `${item.status==="completed"? "check": item.status==="canceled"? "ban" : item.status==="pending"? "exclamation": item.status==="sending"? "arrow-up": ""}`, type: "font-awesome",  color: `${item.status==="completed"? "#4ade80" : item.status==="canceled"? "#ef4444" : item.status==="sending"? "rgb(217 119 6)": item.status==="pending"? "rgb(234 179 8)": ""}` }}
                       containerStyle={{
-                        backgroundColor: "white",
-                        borderColor:  "rgb(241 245 249 / var(--tw-bg-opacity))",
+                        backgroundColor: "rgb(20 184 166)",
+                      
                         
-                        
-                  
-                        marginLeft: 12,
+                   
                         
                       }}
                     />
                   </View>
 
                   <View className="flex">
-                    <Text className="font-medium">{item.name}</Text>
+                    <Text className="font-medium text-slate-600">{item.name}</Text>
                     <Text
                       className={` ${
                         item.status === "canceled"
@@ -211,8 +210,8 @@ const Index = () => {
                   </View>
                 </View>
                 <View className="flex w-1/5">
-                  <Text>{item.currency}</Text>
-                  <Text className="font-bold">
+                  <Text className="text-slate-600">{item.currency}</Text>
+                  <Text className="font-bold text-slate-600">
                     {item.amount.toLocaleString()}
                   </Text>
                 </View>
