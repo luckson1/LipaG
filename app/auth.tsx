@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Platform, TextInput, SafeAreaView, Pressable } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, Text, TextInput, SafeAreaView, Pressable } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
-import {  Button, ScrollView } from "native-base";
-import Icon from "react-native-vector-icons/AntDesign";
 
 import { z } from "zod";
 import { Stack, useRouter } from "expo-router";
@@ -18,6 +16,11 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const LoginScreen = () => {
+  const textInput = useRef<TextInput>(null);
+  useEffect(() => {
+    textInput.current?.focus();
+  
+  }, []);
   const {
     control,
     handleSubmit,
@@ -31,7 +34,7 @@ const LoginScreen = () => {
   });
 const router=useRouter()
   const onSubmit = (data: FormData) => {
-router.push(`/otp?number=${data.phoneNumber}`)
+router.push(`/verification?number=${data.phoneNumber}`)
   };
 const [isAgreed, setIsAgreed]=useState(true)
   return (
@@ -41,26 +44,26 @@ const [isAgreed, setIsAgreed]=useState(true)
 <Stack.Screen options={{headerShown: false}}/>
    <StatusBar />
 <View className="flex justify-center items-center p-5 w-full h-full flex-[80%]">
-<View className="flex w-full items-center justify-center max-w-md  rounded-lg">
+<View className="flex w-full  max-w-md  rounded-lg">
   
-      <Text className="my-10 text-4xl font-bold">Hi 👋, Welcome</Text>
+      <Text className="my-10 text-4xl font-bold text-slate-700">Hi 👋, Welcome</Text>
      
-      <Text className="text-lg">Login or sign up with your phone</Text>
-      <View className= {`my-5 flex h-fit w-full flex-row  items-center justify-start px-5 rounded-md border  focus:border-green-500 focus:ring-green-500 ${errors.phoneNumber? "border border-red-500" : ""}`}>
-      <Text className="text-lg text-slate-400">+254</Text>
+      <Text className="text-lg text-slate-700">Login or sign up with your phone</Text>
+      <View className= {`my-5 flex h-fit w-full flex-row  items-center justify-start px-5 k border-b  focus:border-green-500 focus:ring-green-500 ${errors.phoneNumber? "border border-red-500" : ""}`}>
+      <Text className=" text-slate-400 text-xl">+254</Text>
       <Controller
         control={control}
         name="phoneNumber"
         defaultValue=""
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-         
+         ref={textInput}
             autoCapitalize="none"
             keyboardType="phone-pad"
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
             value={value}
-            className=" block w-full rounded-md    px-1 text-lg py-3"
+            className=" block w-full rounded-md    px-1  py-3 text-xl"
           />
         )}
       />
